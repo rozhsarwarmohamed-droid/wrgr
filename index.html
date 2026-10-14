@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Race to the Ordinals - Grade 5 ESL</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+:root{--ink:#12263f;--blue:#1d6fe0;--org:#ff7a1a;--grn:#1fb86a;--yel:#ffd23f;--bg:#e3f4ff;--sh:#b4c8da}
+html,body{height:100%;margin:0;font-family:"Trebuchet MS","Segoe UI",system-ui,Arial,sans-serif;color:var(--ink);background:var(--bg);font-size:clamp(16px,1.7vw,28px)}
+#app{height:100%;display:flex;flex-direction:column}
+header{flex:0 0 auto;display:flex;align-items:center;gap:.6rem;padding:.4rem .8rem;background:var(--ink);color:#fff}
+header h1{flex:1;margin:0;font-size:1.25rem}
+.fin{flex:0 0 auto;height:14px;background:repeating-conic-gradient(var(--ink) 0 25%,#fff 0 50%) 0 0/14px 14px}
+button{font:inherit;cursor:pointer;color:var(--ink)}
+.pl{min-height:48px;border:0;border-radius:2rem;padding:.2rem 1rem;font-weight:700;color:#fff;opacity:.6}
+.pl.on{opacity:1;outline:4px solid #fff;transform:scale(1.05)}
+.a{background:var(--blue)}.b{background:var(--org)}
+#tm{min-height:48px;border:0;border-radius:2rem;padding:.2rem 1rem;font-weight:700;background:var(--yel)}
+nav{flex:0 0 auto;display:flex;background:#fff}
+nav button{flex:1;min-height:60px;border:0;border-bottom:5px solid transparent;background:none;font-weight:700;color:#5b7088}
+nav button small{display:block;font-weight:400}
+nav button.on{color:var(--blue);border-bottom-color:var(--blue);background:#eef6ff}
+.content-area{flex:1 1 auto;min-height:0;overflow:auto;padding:.8rem 1rem}
+.p{display:none}.p.on{display:block}
+.bar{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:.7rem}
+.big{min-height:56px;border:0;border-radius:1rem;padding:.3rem 1.2rem;font-weight:700;background:#fff;box-shadow:0 3px 0 var(--sh)}
+.q{display:flex;align-items:center;gap:.6rem;margin:.2rem 0 .8rem;font-size:1.7rem;font-weight:800}
+.q u{text-decoration:none;color:var(--org)}
+.sp{min-width:56px;min-height:56px;border:0;border-radius:50%;background:var(--yel);font-size:1.3rem}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.7rem}
+.card{min-height:7.5rem;border:0;border-radius:1.2rem;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--blue);transition:transform .2s;box-shadow:0 4px 0 #0003}
+.card b{font-size:2.6rem}.card span{font-size:1.25rem}
+.card.g1{background:#e0a800;color:var(--ink)}.card.g2{background:#aeb7c2;color:var(--ink)}.card.g3{background:#c8793a}
+.card.pop{transform:scale(1.12)}.card.hid span{visibility:hidden}
+.row{display:flex;gap:.7rem}
+.fl{align-self:center;font-size:2.6rem}
+.runner{flex:1;min-height:11rem;border:0;border-radius:1.2rem;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 4px 0 var(--sh)}
+.runner i{font-size:3.4rem;font-style:normal}.runner b{font-size:1.4rem}
+.runner em{font-style:normal;font-weight:800;font-size:1.6rem;color:var(--org);min-height:2rem}
+.ok{background:#b9f6ca!important}
+.no{animation:sh .4s;background:#ffcdd2!important}
+@keyframes sh{25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+.fb{font-size:1.5rem;font-weight:700;min-height:2.5rem;margin-top:.8rem}
+.mt{display:flex;gap:2rem}.col{flex:1;display:flex;flex-direction:column;gap:.6rem}
+.mb{min-height:60px;border:0;border-radius:1rem;font-size:1.5rem;font-weight:800;background:#fff;box-shadow:0 3px 0 var(--sh)}
+.sel{outline:4px solid var(--blue)}.done{background:#b9f6ca;opacity:.7}
+.rw{display:flex;gap:1rem}.slots{flex:1.4}
+.slot{min-height:3.2rem;border:3px dashed #8fa5b8;border-radius:.8rem;margin-bottom:.4rem;padding:.2rem .6rem;font-size:1.2rem;display:flex;gap:.5rem;align-items:center;background:#fff}
+.slot b{color:var(--org);min-width:3.4rem}
+.slot.ok{border:3px solid var(--grn);background:#e8fff0}
+.slot.act{border-color:var(--org);background:#fff6e5}
+.pool{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:.6rem;align-content:start}
+.rc{min-height:7rem;border:0;border-radius:1rem;background:#fff;font-size:1.1rem;font-weight:700;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 3px 0 var(--sh)}
+.rc i{font-size:2.6rem;font-style:normal}
+.hint{animation:pl 1s infinite}@keyframes pl{50%{transform:scale(1.1);background:#fff3b0}}
+.nb{background:#fffef0;border-left:6px solid #e0463c;border-radius:.8rem;padding:.6rem 1rem;font-size:1.6rem;font-family:"Segoe Print","Comic Sans MS",cursive}
+.nb p{margin:.3rem 0;border-bottom:2px solid #bcd}.nb u{display:inline-block;min-width:11em;text-decoration:none}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin:.7rem 0}
+.chip{min-height:52px;border:0;border-radius:2rem;padding:.2rem 1rem;font-weight:700;background:var(--yel)}
+.dt{display:flex;align-items:center;gap:.6rem;margin-top:.6rem;background:#fff;border-radius:1rem;padding:.5rem 1rem;font-size:1.4rem;font-weight:700}
+@media (max-width:700px){.grid{grid-template-columns:repeat(2,1fr)}.rw,.mt{flex-direction:column}.row{flex-wrap:wrap}}
+</style></head><body>
+<div id="app">
+<header><h1>Race to the Ordinals</h1><button id="tm"></button><button id="pl0" class="pl"></button><button id="pl1" class="pl"></button></header>
+<div class="fin"></div>
+<nav></nav>
+<div class="content-area">
+<section class="p on" id="p0">
+ <div class="q">Tap a card and say it!</div>
+ <div class="bar"><button class="big" id="sa">🔊 Say them all</button><button class="big" id="hd">🙈 Hide the words</button></div>
+ <div class="grid" id="lad"></div>
+</section>
+<section class="p" id="p1">
+ <div class="q" id="q2"></div>
+ <div class="row" id="trk"></div>
+ <div class="fb" id="fb2"></div>
+</section>
+<section class="p" id="p2">
+ <div class="q" id="q3"></div>
+ <div class="mt"><div class="col" id="ml"></div><div class="col" id="mr"></div></div>
+ <div class="bar" style="margin-top:.7rem"><button class="big" id="nx3">Next round</button></div>
+</section>
+<section class="p" id="p3">
+ <div class="bar"><button class="big" id="chb">🔥 Challenge</button><button class="big" id="heb">👤 I</button><button class="big" id="hp">💡 Help</button><button class="big" id="rd">▶ Read it</button></div>
+ <div class="q" id="msg4"></div>
+ <div class="rw"><div class="slots" id="sl"></div><div class="pool" id="pool"></div></div>
+</section>
+<section class="p" id="p4">
+ <div class="nb" id="nb"></div>
+ <div class="chips" id="chips"></div>
+ <div class="bar"><button class="big" id="rd5">▶ Read my routine</button><button class="big" id="cl5">✖ Clear</button></div>
+ <div class="q" style="font-size:1.3rem">✍️ Now write it in your notebook!</div>
+ <div class="dt">🚶 Charity Walk: <span id="dtx"></span><button class="sp" id="dm">◀</button><button class="sp" id="dp">▶</button><button class="sp" id="ds">🔊</button></div>
+</section>
+</div></div>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const W=['first','second','third','fourth','fifth','sixth','seventh','eighth','ninth','tenth'];
+const N=i=>i+1+(['st','nd','rd'][i]||'th'),cap=s=>s[0].toUpperCase()+s.slice(1);
+const rnd=a=>a[Math.random()*a.length|0],shuf=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+const mk=(tag,cls,html,fn)=>{const e=document.createElement(tag);e.className=cls;e.innerHTML=html;if(fn)e.onclick=fn;return e};
+function say(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';u.rate=.85;speechSynthesis.speak(u)}catch(e){}}
+/* players: Blue = higher level, Orange = support level. Tap a player chip to swap its level. */
+let turn=0,sc=[0,0],lv=[2,1];
+function hud(){[0,1].forEach(i=>{const b=$('#pl'+i);b.className='pl '+'ab'[i]+(turn==i?' on':'');b.textContent=(i?'🟠 Orange':'🔵 Blue')+' (Lv '+lv[i]+') ⭐ '+sc[i]})}
+function win(){sc[turn]++;turn=1-turn;hud()}
+[0,1].forEach(i=>$('#pl'+i).onclick=()=>{lv[i]=3-lv[i];hud()});
+/* 20 minute timer */
+let secs=1200,iv=null;
+function tick(){$('#tm').textContent=(iv?'⏸ ':'⏱ ')+(secs>0?String(secs/60|0).padStart(2,'0')+':'+String(secs%60).padStart(2,'0'):"Time's up!")}
+$('#tm').onclick=()=>{if(iv){clearInterval(iv);iv=null}else if(secs>0){iv=setInterval(()=>{if(--secs<=0){clearInterval(iv);iv=null}tick()},1000)}else secs=1200;tick()};
+/* 1 Warm-up */
+let hid=0;const lad=$('#lad');
+W.forEach((w,i)=>lad.append(mk('button','card'+(i<3?' g'+(i+1):''),`<b>${N(i)}</b><span>${w}</span>`,function(){this.classList.remove('hid');this.classList.add('pop');setTimeout(()=>this.classList.remove('pop'),300);say(w)})));
+$('#sa').onclick=()=>[...lad.children].forEach((d,i)=>setTimeout(()=>d.click(),i*1300));
+$('#hd').onclick=e=>{hid=1-hid;[...lad.children].forEach(d=>d.classList.toggle('hid',!!hid));e.target.textContent=hid?'👀 Show the words':'🙈 Hide the words'};
+/* 2 Race: Who's first? */
+const NM=[['Oliver','🦊'],['Mia','🐰'],['Sam','🐻'],['Lily','🐼'],['Tom','🐯']];let lock=0;
+function R2(){lock=0;$('#fb2').textContent='';const o=shuf(NM),k=rnd(lv[turn]>1?[0,1,2,3,4]:[0,1,2]),q=$('#q2');
+ q.innerHTML=`${turn?'🟠':'🔵'} Who's <u>${W[k]}</u>?`;q.append(mk('button','sp','🔊',()=>say("Who's "+W[k]+'?')));
+ const t=$('#trk');t.innerHTML='<div class="fl">🏁</div>';
+ o.forEach((r,i)=>t.append(mk('button','runner',`<i>${r[1]}</i><b>${r[0]}</b><em>${lv[turn]<2?N(i):''}</em>`,function(){
+  if(lock)return;
+  if(i==k){lock=1;this.classList.add('ok');$('#fb2').textContent=`${r[0]} is ${W[k]}! 🎉`;say(r[0]+' is '+W[k]+'!');win();setTimeout(R2,2300)}
+  else{this.classList.add('no');setTimeout(()=>this.classList.remove('no'),500);$('#fb2').textContent='Try again! Count from the finish line 🏁';say('Try again')}})))}
+/* 3 Match numbers and words */
+let sel=null,left=0;
+function R3(){sel=null;const hi=lv[turn]>1,ids=hi?shuf([...Array(10).keys()]).slice(0,6).sort((a,b)=>a-b):[0,1,2,3];left=ids.length;
+ $('#q3').textContent=(turn?'🟠':'🔵')+' Match the numbers to the words';$('#ml').innerHTML=$('#mr').innerHTML='';
+ shuf(ids).forEach(i=>$('#ml').append(mb(N(i),i,'l')));shuf(ids).forEach(i=>$('#mr').append(mb(W[i],i,'r')));$('#nx3').style.visibility='hidden'}
+function mb(t,i,s){const b=mk('button','mb',t,()=>{
+ if(b.classList.contains('done'))return;if(s=='r'||lv[turn]<2)say(W[i]);
+ if(!sel||sel.s==s){if(sel)sel.b.classList.remove('sel');sel={b,i,s};b.classList.add('sel');return}
+ const p=sel;sel=null;
+ if(p.i==i){[p.b,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done')});if(!--left){win();$('#q3').textContent='🎉 All matched!';$('#nx3').style.visibility='visible'}}
+ else [p.b,b].forEach(x=>{x.classList.add('no');setTimeout(()=>x.classList.remove('no','sel'),500)})});return b}
+$('#nx3').onclick=R3;
+/* 4 Morning routine (book p.25) */
+const RT=[['⏰','get up','gets up'],['🧼','wash my face and hands','washes his face and hands'],['👕','get dressed','gets dressed'],['🥣','have breakfast','has breakfast'],['🪥','brush my teeth','brushes his teeth'],['🎒','get my bag','gets his bag'],['🏫','go to school','goes to school']];
+let ch=0,he=0,n=0;
+const txt=i=>`${cap(W[i])} ${he?'he '+RT[i][2]:'I '+RT[i][1]}.`;
+function fill(i){const s=$('#s'+i);s.className='slot ok';s.innerHTML=`<b>${N(i)}</b>${RT[i][0]} ${txt(i)}`}
+function act(){$$('.slot').forEach(s=>s.classList.remove('act'));if(n<7){$('#s'+n).classList.add('act');$('#msg4').textContent=cap(W[n])+' I ... ?'}}
+function R4(){n=ch?0:3;$('#sl').innerHTML=$('#pool').innerHTML='';
+ RT.forEach((r,i)=>{const s=mk('div','slot',`<b>${N(i)}</b>`);s.id='s'+i;$('#sl').append(s)});
+ for(let i=0;i<n;i++)fill(i);
+ shuf(RT.map((_,i)=>i).slice(n)).forEach(i=>{const c=mk('button','rc',`<i>${RT[i][0]}</i>${RT[i][1]}`,()=>pick(i));c.id='c'+i;$('#pool').append(c)});act()}
+function pick(i){const c=$('#c'+i);
+ if(i==n){c.remove();fill(n);say(txt(n));n++;act();if(n==7){win();$('#msg4').textContent='🎉 Routine complete! Tap Read it'}}
+ else{c.classList.add('no');setTimeout(()=>c.classList.remove('no'),500);$('#msg4').textContent="What's "+W[n]+'?';say("What's "+W[n]+'?')}}
+$('#chb').onclick=e=>{ch=1-ch;e.target.textContent=ch?'🔥 Challenge: ON':'🔥 Challenge';R4()};
+$('#heb').onclick=e=>{he=1-he;e.target.textContent=he?'👤 he':'👤 I';for(let i=0;i<n;i++)fill(i)};
+$('#hp').onclick=()=>{const c=$('#c'+n);if(c)c.classList.add('hint')};
+$('#rd').onclick=()=>say(Array.from({length:n},(_,i)=>txt(i)).join(' '));
+/* 5 All about me + charity walk date */
+let my=[],dd=2;
+function d5(){$('#nb').innerHTML='<b>My morning routine</b>'+[0,1,2,3,4].map(i=>`<p>${cap(W[i])} I <u>${my[i]!=null?RT[my[i]][1]:''}</u>.</p>`).join('')}
+function dt(){$('#dtx').textContent='Saturday '+N(dd)+' October'}
+function R5(){my=[];d5();dt()}
+RT.forEach((r,i)=>$('#chips').append(mk('button','chip',r[0]+' '+r[1],()=>{if(my.length<5){my.push(i);d5();say(cap(W[my.length-1])+' I '+r[1])}})));
+$('#rd5').onclick=()=>say(my.map((m,i)=>cap(W[i])+' I '+RT[m][1]+'.').join(' '));
+$('#cl5').onclick=()=>{my=[];d5()};
+$('#dm').onclick=()=>{dd=(dd+9)%10;dt()};$('#dp').onclick=()=>{dd=(dd+1)%10;dt()};
+$('#ds').onclick=()=>say('The charity walk is on Saturday the '+W[dd]+' of October.');
+/* tabs */
+const P=[null,R2,R3,R4,R5];
+function go(i){$$('.p').forEach((p,j)=>p.classList.toggle('on',i==j));$$('nav button').forEach((b,j)=>b.classList.toggle('on',i==j));$('.content-area').scrollTo(0,0);if(P[i])P[i]()}
+[['🎯 Warm-up',3],['🏁 Race',4],['🔗 Match',3],['⏰ Routine',6],['✍️ My turn',4]].forEach((t,i)=>$('nav').append(mk('button',i?'':'on',`${t[0]}<small>${t[1]} min</small>`,()=>go(i))));
+hud();tick();
+</script></body></html>
